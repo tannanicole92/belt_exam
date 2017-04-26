@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h2>Add a Trip</h2>
+    <a href="/travels">Home</a> / <a href="/logout">Logout</a>
+    <form action="/add_trip" method="post">
+      {% csrf_token %}
+      <p>
+        <label for="name">Destination:</label>
+        <input type="text" name="name"></p>
+      <p>
+        <label for="description">Description:</label>
+        <textarea rows="8" cols="80" name="description"></textarea></p>
+      <p>
+        <label for="start_date">Travel Date From:</label>
+        <input type="date" name="start_date"></p>
+      <p>
+        <label for="end_date">Travel Date To:</label>
+        <input type="date" name="end_date"></p>
+      <p>
+        <input type="submit" name="submit" value="Add"></p>
+    </form>
+
+  </body>
+</html>
