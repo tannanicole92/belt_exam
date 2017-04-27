@@ -10,5 +10,5 @@ urlpatterns = [
     url(r'^add$', views.add),
     url(r'^destination/(?P<id>\d+)$', views.destination),
     url(r'^add_trip$', views.add_trip),
-    url(r'^destination/(?P<id>\d+)/join$', views.join),
+    url(r'^travels/(?P<id>\d+)/join$', views.join),
 ]

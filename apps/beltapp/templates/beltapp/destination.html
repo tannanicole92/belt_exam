@@ -6,15 +6,17 @@
   </head>
   <body>
     <a href="/travels">Home</a> / <a href="/logout">Logout</a>
-    <h3>{{trips.name}}</h3>
-    <h4>Planned By: {{trips.user_id.first_name}} {{trips.user_id.last_name}}</h4>
-    <h4>Description: {{trips.description}}</h4>
-    <h4>Travel Date From: {{trips.start_date}}</h4>
-    <h4>Travel Date To: {{trips.end_date}}</h4>
+    {% for trip in trips %}
+    <h3>{{trip.name}}</h3>
+    <h4>Planned By: {{trip.user_id.first_name}} {{trip.user_id.last_name}}</h4>
+    <h4>Description: {{trip.description}}</h4>
+    <h4>Travel Date From: {{trip.start_date}}</h4>
+    <h4>Travel Date To: {{trip.end_date}}</h4>
 
     <h3>Other users' joining the trip:</h3>
-    {% for traveler in travelers %}
-    <h4>{{traveler.user_id.first_name}} {{traveler.user_id.last_name}}</h4>
+    {% for traveler in trip.users.all %}
+      <h4>{{traveler.first_name}} {{traveler.last_name}}</h4>
+    {% endfor %}
     {% endfor %}
 
 

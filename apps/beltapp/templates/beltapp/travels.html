@@ -28,6 +28,14 @@
           <td>{{destination.plan}}</td>
         </tr>
     {% endfor %}
+    {% for trip in joined_trips %}
+      <tr>
+        <td><a href="destination/{{trip.id}}">{{trip.name}}</a></td>
+        <td>{{trip.start_date}}</td>
+        <td>{{trip.end_date}}</td>
+        <td>{{trip.plan}}</td>
+      </tr>
+    {% endfor %}
     </tbody>
   </table>
 
@@ -49,7 +57,7 @@
           <td><a href="destination/{{plan.id}}">{{plan.name}}</a></td>
           <td>{{plan.start_date}}</td>
           <td>{{plan.end_date}}</td>
-          <td><a href ="/destination/{{plan.id}}/join">Join</a></td>
+          <td><a href ="/travels/{{plan.id}}/join">Join</a></td>
         </tr>
     {% endfor %}
     </tbody>

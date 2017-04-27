@@ -44,11 +44,13 @@ def logout(request):
 
 def travels(request):
     current_user = User.objects.get(id=request.session['user_id'])
+    joined_trip = Destination.objects.filter(users__id=request.session['user_id'])
     destination = Destination.objects.filter(user_id=current_user)
-    plan = Destination.objects.all() #need to figure out quiry for .exclude becasue all of yours weren't working.
+    plan = Destination.objects.all().exclude(user_id=request.session['user_id']) #need to figure out quiry for .exclude becasue all of yours weren't working.
     context = {
         "destinations": destination,
         "plans": plan,
+        "joined_trips": joined_trip,
     }
 
     return render(request, 'beltapp/travels.html', context)
@@ -70,16 +72,17 @@ def add_trip(request):
         return redirect('/destination/'+str(new_trip.id))
 
 def join(request, id):
-    a_trip = Destination.objects.get(id=id)
+    trip_id = int(id)
+    a_trip = Destination.objects.get(id=trip_id)
     new_user = User.objects.get(id=request.session['user_id'])
-    new_trip = Destination.objects.create(users=new_user)
-    return render(request, 'beltapp/travels.html')
+    new_trip = a_trip.users.add(new_user)
+    return redirect('/travels')
 
 def destination(request, id):
-    trip = Destination.objects.get(id=id)
-    traveler = trip.users.all()
+    trip = Destination.objects.filter(id=id)
+    #traveler = trip.users.all()
     context = {
         "trips": trip,
-        "travelers": traveler,
+        #"travelers": traveler,
     }
     return render(request, 'beltapp/destination.html', context)
