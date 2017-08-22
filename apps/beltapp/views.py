@@ -11,6 +11,9 @@ EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9\.\+_-]+@[a-zA-Z0-9\._-]+\.[a-zA-Z]*$')
 def index(request):
     return render(request, 'beltapp/index.html')
 
+def register(request):
+    return render(request, 'beltapp/register.html')
+
 def exists(request):
     data = {'email': request.POST['email'], 'password': request.POST['password']}
     results = User.objects.login(data)
@@ -44,19 +47,41 @@ def logout(request):
 
 def travels(request):
     current_user = User.objects.get(id=request.session['user_id'])
-    joined_trip = Destination.objects.filter(users__id=request.session['user_id'])
-    destination = Destination.objects.filter(user_id=current_user)
-    plan = Destination.objects.all().exclude(user_id=request.session['user_id']) #need to figure out quiry for .exclude becasue all of yours weren't working.
+    plan = Destination.objects.all().exclude(user_id=request.session['user_id']).exclude(users=request.session['user_id'])
     context = {
-        "destinations": destination,
+        "current_user": current_user,
         "plans": plan,
-        "joined_trips": joined_trip,
     }
 
     return render(request, 'beltapp/travels.html', context)
 
 def add(request):
-    return render(request, 'beltapp/add.html')
+    current_user = User.objects.get(id=request.session['user_id'])
+    context = {
+    "current_user": current_user,
+    }
+    return render(request, 'beltapp/add.html', context)
+
+def deletetrip(request, id, user_id):
+    id = id
+    a_user = User.objects.get(id=request.session['user_id'])
+    user_id = a_user
+    a_trip = Destination.objects.filter(id=id)
+    a_trip.delete()
+    return redirect('/portfolio/'+ str(user_id.id))
+
+def portfolio(request, user_id):
+    a_user = User.objects.get(id=user_id)
+    current_user = User.objects.get(id=request.session['user_id'])
+    joined_trip = Destination.objects.filter(users__id=user_id)
+    journeys = Destination.objects.filter(user_id=user_id)
+    context = {
+    "a_user": a_user,
+    "current_user": current_user,
+    "journeys": journeys,
+    "joined_trips": joined_trip,
+    }
+    return render(request, 'beltapp/portfolio.html', context)
 
 def add_trip(request):
     print request.POST
@@ -78,11 +103,43 @@ def join(request, id):
     new_trip = a_trip.users.add(new_user)
     return redirect('/travels')
 
+def leaving(request, id, user_id):
+    trip_id = int(id)
+    user_id = user_id
+    a_trip = Destination.objects.get(id=trip_id)
+    new_user = User.objects.get(id=request.session['user_id'])
+    new_trip = a_trip.users.remove(new_user)
+    return redirect('/portfolio/'+str(user_id))
+
+def joining(request, id, user_id):
+    trip_id = int(id)
+    user_id = user_id
+    a_trip = Destination.objects.get(id=trip_id)
+    new_user = User.objects.get(id=request.session['user_id'])
+    new_trip = a_trip.users.add(new_user)
+    return redirect('/portfolio/'+str(user_id))
+
+def leaves(request, id, user_id):
+    trip_id = int(id)
+    user_id = user_id
+    a_trip = Destination.objects.get(id=trip_id)
+    new_user = User.objects.get(id=request.session['user_id'])
+    new_trip = a_trip.users.remove(new_user)
+    return redirect('/destination/'+str(trip_id))
+
+def joiners(request, id, user_id):
+    trip_id = int(id)
+    user_id = user_id
+    a_trip = Destination.objects.get(id=trip_id)
+    new_user = User.objects.get(id=request.session['user_id'])
+    new_trip = a_trip.users.add(new_user)
+    return redirect('/destination/'+str(trip_id))
+
 def destination(request, id):
     trip = Destination.objects.filter(id=id)
-    #traveler = trip.users.all()
+    current_user = User.objects.get(id=request.session['user_id'])
     context = {
         "trips": trip,
-        #"travelers": traveler,
+        "current_user": current_user,
     }
     return render(request, 'beltapp/destination.html', context)

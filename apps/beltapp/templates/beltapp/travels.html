@@ -3,71 +3,50 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'beltapp/css/travels.css' %}">
   </head>
   <body>
-    <a href="/logout">Logout</a>
+    <div class="navbar">
+      <div class="brand">
+        <img id="travelpic" src="../../static/beltapp/images/travelbuddypic.jpg">
+        <h2 id="travelbrand">The Travel Buddy</h2>
+      </div>
+      <div class="links">
+        <a id="topa" href="/add">Add Travel Plan</a> <b> | </b>
+        <a id="topa" href="/portfolio/{{current_user.id}}">My Profile</a> <b> | </b>
+        <a id="topa" href="/logout">Logout</a>
+      </div>
 
-    Hello, {{request.session.first_name}}!
-
-    <h4>Your Trip Schedules:</h4>
-    <table>
-      <thead>
-        <tr>
-          <th>Destination</th>
-          <th>Travel Start Date</th>
-          <th>Travel End Date</th>
-          <th>Plan</th>
-        </tr>
-      </thead>
-      <tbody>
-    {% for destination in destinations %}
-        <tr>
-          <td><a href="destination/{{destination.id}}">{{destination.name}}</a></td>
-          <td>{{destination.start_date}}</td>
-          <td>{{destination.end_date}}</td>
-          <td>{{destination.plan}}</td>
-        </tr>
-    {% endfor %}
-    {% for trip in joined_trips %}
-      <tr>
-        <td><a href="destination/{{trip.id}}">{{trip.name}}</a></td>
-        <td>{{trip.start_date}}</td>
-        <td>{{trip.end_date}}</td>
-        <td>{{trip.plan}}</td>
-      </tr>
-    {% endfor %}
-    </tbody>
-  </table>
-
-    <h4>Other User's Travel Plans</h4>
-    <table>
-      <thead>
-          <tr>
-            <th>Name</th>
-            <th>Destination</th>
-            <th>Travel Start Date</th>
-            <th>Travel End Date</th>
-            <th>Do You Want to Join?</th>
-          </tr>
-      </thead>
-      <tbody>
-    {% for plan in plans %}
-        <tr>
-          <td>{{plan.user_id.first_name}} {{plan.user_id.last_name}}</td>
-          <td><a href="destination/{{plan.id}}">{{plan.name}}</a></td>
-          <td>{{plan.start_date}}</td>
-          <td>{{plan.end_date}}</td>
-          <td><a href ="/travels/{{plan.id}}/join">Join</a></td>
-        </tr>
-    {% endfor %}
-    </tbody>
-  </table>
-  <p>
-    <a href="/add">Add Travel Plan!</a></p>
+    </div>
 
 
+<div class="maincontent">
+  <h2>Travel Plans You Have Not Joined</h2>
+  {% for plan in plans %}
+    <div class="atrip">
+      <div class="tripdetail">
+        <h4>Host: <a id="tname" href="/portfolio/{{plan.user_id.id}}"><i>{{plan.user_id.first_name}} {{plan.user_id.last_name}}</i></a></h4>
+        <h3>Trip Name: <a id="tname" href="/destination/{{plan.id}}">{{plan.name}}</a></h3>
+        <p><b>Start Date: </b>{{plan.start_date}}</p>
+        <p><b>End Date: </b>{{plan.end_date}}</p>
+        <p id="delp"><a id="tname" href ="/travels/{{plan.id}}/join">Join</a></p>
+      </div>
 
+      <div class="desarea">
 
+        <h3>Trip Description: </h3>
+        <div class="tripinfo">
+          <p> {{plan.description}} </p>
+          <b>Other users' joining the trip:</b>
+          {% for traveler in plan.users.all %}
+            <p><a id="tname" href="/portfolio/{{traveler.id}}">{{traveler.first_name}}   {{traveler.last_name}}</a></p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
 
+</div>
   </body>
 </html>

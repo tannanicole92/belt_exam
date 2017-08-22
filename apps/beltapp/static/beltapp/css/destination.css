@@ -1,0 +1,103 @@
+html {
+
+  position: absolute;
+  height: 100%;
+  display: table;
+  width: 100%;
+}
+
+body {
+  display: table-cell;
+  background-image: url('../images/cloudbackground.jpg');
+  background-position: center;
+  background-size: cover;
+
+}
+
+.main {
+  position: relative;
+  margin-top: 120px;
+  margin-left: 2%;
+}
+
+.navbar {
+  background-color: #fefefe;
+  height: 86px;
+  vertical-align: top;
+  position: absolute;
+  width: 100%;
+}
+
+#travelbrand {
+  position: relative;
+  left: 60%;
+  top: -75px;
+}
+
+.links {
+  position: relative;
+  vertical-align: top;
+  top: 25px;
+  text-align: right;
+  margin-right: 15px;
+}
+
+#topa {
+  text-decoration: none;
+  color: black;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.brand {
+  display: inline-block;
+  text-align: left;
+  position: absolute;
+  left: 0%;
+}
+
+#tname {
+  color: #1E90FF;
+  text-decoration-color: #1E90FF;
+}
+
+span {
+  color: black;
+  margin-left: 5px;
+}
+
+#delp {
+  position: relative;
+}
+
+
+.tripinfo {
+  position: relative;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box;
+  padding-bottom: 15px;
+}
+
+.desarea {
+  position: relative;
+  left: 2%;
+  vertical-align: top;
+  width: 50%;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box;
+  display: inline-block;
+  padding-bottom: 20px;
+}
+
+.atrip {
+  position: relative;
+  margin: 20px;
+  padding-left: 15px;
+  box-sizing: border-box;
+}
+
+.tripdetail {
+  position: relative;
+}

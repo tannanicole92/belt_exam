@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'beltapp/css/portfolio.css' %}">
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="brand">
+        <img id="travelpic" src="../../static/beltapp/images/travelbuddypic.jpg">
+        <h2 id="travelbrand">The Travel Buddy</h2>
+      </div>
+      <div class="links">
+        <a id="topa" href="/travels">View More Trips</a> <b> | </b>
+        <a id="topa" href="/add">Add Travel Plan</a> <b> | </b>
+        {% if a_user.id != current_user.id %}
+          <a id="topa" href="/portfolio/{{current_user.id}}">My Profile</a> <b> | </b>
+        {% endif %}
+        <a id="topa" href="/logout">Logout</a>
+      </div>
+
+    </div>
+
+  <div class="main">
+    <h1>{{a_user.first_name}} {{a_user.last_name}}'s Travel Plans!</h1>
+    <div class="planned">
+    <h3>Trips you have planned</h3>
+
+    {% for d in journeys %}
+    <div class="atrip">
+      <div class="tripdetail">
+      <h3>Trip Name: <a id="tname" href="/destination/{{d.id}}">{{d.name}}</a></h3>
+      <p><b>Start Date:</b> <span>{{d.start_date}}</span></p>
+      <p><b>End Date: </b> <span>{{d.end_date}} </span></p>
+      {% if a_user.id == current_user.id %}
+        <p id="delp"><a id="tname" href="/deletetrip/{{d.id}}/{{current_user.id}}">Delete Trip</a></p>
+      {% elif current_user not in d.users.all %}
+        <p id="delp"> <a id="tname" href ="/travels/{{d.id}}/{{a_user.id}}/joining">Join Trip</a></p>
+      {% else %}
+        <p id="delp">
+        <a id="tname" href="/travels/{{d.id}}/{{a_user.id}}/leaving">Leave Trip</a></p>
+      {% endif %}
+    </div>
+      <div class="desarea">
+
+        <h3>Trip Description: </h3>
+        <div class="tripinfo">
+        <p> {{d.description}} </p>
+        <b>Other users' joining the trip:</b>
+        {% for traveler in d.users.all %}
+          <p><a id="tname" href="/portfolio/{{traveler.id}}">{{traveler.first_name}}   {{traveler.last_name}}</a></p>
+        {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+  <div class="joined">
+    <h3>Trips you have joined </h3>
+      {% for trip in joined_trips %}
+        <div class="atrip">
+          <div class="tripdetail">
+            <p>Trip Name: <a id="tname" href="/destination/{{trip.id}}">{{trip.name}}</a></p>
+            <p><b>Start Date:</b><span> {{trip.start_date}}</span></p>
+            <p><b>End Date:</b> <span>{{trip.end_date}}</span></p>
+            {% if a_user.id == current_user.id %}
+              <p id="delp"><a id="tname" href="/travels/{{trip.id}}/{{current_user.id}}/leaving">Leave Trip</a></p>
+            {% endif %}
+          </div>
+          <div class="desarea">
+            <h3>Trip Description:</h3>
+            <div class="tripinfo">
+            <p>{{trip.description}}</p>
+            <p>Trip Host: <a id="tname" href="/portfolio/{{trip.user_id.id}}"> {{trip.user_id.first_name}} {{trip.user_id.last_name}} </a> </p>
+            <b>Other users' joining the trip:</b>
+            {% for traveler in joined_trips.users.all %}
+              <p><a id="tname" href="/portfolio/{{traveler.id}}">{{traveler.first_name}} {{traveler.last_name}}</a></p>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+  </body>
+</html>

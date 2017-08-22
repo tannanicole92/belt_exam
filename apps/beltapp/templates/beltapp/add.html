@@ -3,27 +3,47 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'beltapp/css/add.css' %}">
   </head>
   <body>
-    <h2>Add a Trip</h2>
-    <a href="/travels">Home</a> / <a href="/logout">Logout</a>
+    <div class="navbar">
+      <div class="brand">
+        <img id="travelpic" src="../../static/beltapp/images/travelbuddypic.jpg">
+        <h2 id="travelbrand">The Travel Buddy</h2>
+      </div>
+      <div class="links">
+        <a id="topa" href="/travels">View More Trips</a> <b> | </b>
+        <a id="topa" href="/portfolio/{{current_user.id}}">My Profile</a> <b> | </b>
+        <a id="topa" href="/logout">Logout</a>
+      </div>
+
+  <div class="main">
+    <h2 id="adding">Add a Trip</h2>
+    <p><a id="cancel" href="/travels">Cancel</a></p>
     <form action="/add_trip" method="post">
       {% csrf_token %}
+      <p id="namep">
+        <label for="name">Destination:</label></p>
       <p>
-        <label for="name">Destination:</label>
-        <input type="text" name="name"></p>
+        <input type="text" id="desname" name="name"></p>
+      <p id="desp">
+        <label id="description" for="description">Description:</label></p>
       <p>
-        <label for="description">Description:</label>
-        <textarea rows="8" cols="80" name="description"></textarea></p>
+        <textarea rows="4" cols="24" name="description"></textarea></p>
+      <p id="startdate">
+        <label for="start_date">Travel Date From:</label></p>
       <p>
-        <label for="start_date">Travel Date From:</label>
-        <input type="date" name="start_date"></p>
+        <input id="date" type="date" name="start_date"></p>
+      <p id="enddate">
+        <label for="end_date">Travel Date To:</label></p>
       <p>
-        <label for="end_date">Travel Date To:</label>
-        <input type="date" name="end_date"></p>
+        <input id="date" type="date" name="end_date" id="end"></p>
       <p>
-        <input type="submit" name="submit" value="Add"></p>
+        <input type="submit" name="submit" id="submit" value="Add"></p>
     </form>
+
+  </div>
 
   </body>
 </html>

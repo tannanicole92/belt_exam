@@ -77,8 +77,8 @@ class User(models.Model):
 class Destination(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
-    start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
+    start_date = models.DateField()
+    end_date = models.DateField()
     user_id = models.ForeignKey(User, related_name="user_travels")
     users = models.ManyToManyField(User, related_name="all_users")
     created_at = models.DateTimeField(auto_now_add=True)

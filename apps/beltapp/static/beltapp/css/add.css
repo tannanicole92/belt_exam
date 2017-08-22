@@ -1,0 +1,127 @@
+html {
+
+  position: absolute;
+  height: 100%;
+  display: table;
+  width: 100%;
+}
+
+body {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  background-image: url('../images/cloudbackground.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+}
+
+#end {
+  margin-left: 17px;
+}
+
+textarea {
+  font-size: 1.2rem;
+}
+
+#desname {
+  width: 250px;
+  height: 30px;
+  font-size: 1.3rem;
+}
+#adding {
+  margin-bottom: -5px;
+}
+#namep {
+  font-size: 1.5rem;
+  margin-bottom: -15px;
+  margin-top: -5px;
+}
+
+#desp {
+  font-size: 1.5rem;
+  margin-bottom: -15px;
+}
+
+#startdate {
+  font-size: 1.5rem;
+  margin-bottom: -15px;
+  margin-top: -5px;
+}
+
+#date {
+  font-size: 1.3rem;
+  width: 250px;
+  height: 30px;
+}
+
+#enddate {
+  font-size: 1.5rem;
+  margin-bottom: -15px;
+}
+
+.navbar {
+  background-color: #fefefe;
+  height: 86px;
+  vertical-align: top;
+  position: absolute;
+  top: 2px;
+  width: 100%;
+}
+
+#travelbrand {
+  position: relative;
+  left: 60%;
+  top: -75px;
+}
+
+.links {
+  position: relative;
+  vertical-align: top;
+  top: 25px;
+  text-align: right;
+  margin-right: 15px;
+}
+
+#topa {
+  text-decoration: none;
+  color: black;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.brand {
+  display: inline-block;
+  text-align: left;
+  position: absolute;
+  left: 0%;
+}
+
+.main {
+  position: relative;
+  top: 70px;
+  vertical-align: top;
+  padding-bottom: 25%;
+}
+
+#cancel {
+  color: #1E90FF;
+  text-decoration-color: #1E90FF;
+}
+
+form {
+  box-sizing: border-box;
+}
+
+#submit {
+  font-size: 1.2rem;
+  margin-top: 5px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 2px solid lightblue;
+  background-color: white;
+  border-radius: 5px;
+}

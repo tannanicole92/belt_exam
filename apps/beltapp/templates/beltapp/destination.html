@@ -3,23 +3,53 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'beltapp/css/destination.css' %}">
   </head>
   <body>
-    <a href="/travels">Home</a> / <a href="/logout">Logout</a>
-    {% for trip in trips %}
-    <h3>{{trip.name}}</h3>
-    <h4>Planned By: {{trip.user_id.first_name}} {{trip.user_id.last_name}}</h4>
-    <h4>Description: {{trip.description}}</h4>
-    <h4>Travel Date From: {{trip.start_date}}</h4>
-    <h4>Travel Date To: {{trip.end_date}}</h4>
 
-    <h3>Other users' joining the trip:</h3>
-    {% for traveler in trip.users.all %}
-      <h4>{{traveler.first_name}} {{traveler.last_name}}</h4>
-    {% endfor %}
-    {% endfor %}
+    <div class="navbar">
+      <div class="brand">
+        <img id="travelpic" src="../../static/beltapp/images/travelbuddypic.jpg">
+        <h2 id="travelbrand">The Travel Buddy</h2>
+      </div>
+      <div class="links">
+        <a id="topa" href="/add">Add Travel Plan</a> <b> | </b>
+        <a id="topa" href="/travels">View More Trips</a> <b> | </b>
+        <a id="topa" href="/portfolio/{{current_user.id}}">My Profile</a> <b> | </b>
+        <a id="topa" href="/logout">Logout</a>
+      </div>
 
+    </div>
 
+    <div class="main">
+      {% for trip in trips %}
+      <div class="atrip">
+        <div class="tripdetail">
+          <h2>{{trip.name}}</h2>
+          <h4>Planned By: <a id="tname" href="/portfolio/{{trip.user_id.id}}">{{trip.user_id.first_name}} {{trip.user_id.last_name}}</a></h4>
+          <h4>Travel Date From: {{trip.start_date}}</h4>
+          <h4>Travel Date To: {{trip.end_date}}</h4>
+          {% if trip.user_id.id == current_user.id %}
+            <p id="delp"><a id="tname" href="/deletetrip/{{trip.id}}/{{current_user.id}}">Delete Trip</a></p>
+          {% elif current_user not in trip.users.all %}
+            <p id="delp"> <a id="tname" href ="/travels/{{trip.id}}/{{current_user.id}}/joiners">Join Trip</a></p>
+          {% else %}
+            <p id="delp"><a id="tname" href="/travels/{{trip.id}}/{{current_user.id}}/leaves">Leave Trip</a></p>
+        {% endif %}
+        </div>
+        <div class="desarea">
+          <h3>Trip Description: </h3>
+          <div class="tripinfo">
+            <p> {{trip.description}} </p>
+
+            <h3>Other users' joining the trip:</h3>
+            {% for traveler in trip.users.all %}
+              <h4><a id="tname" href="/portfolio/{{traveler.id}}">{{traveler.first_name}} {{traveler.last_name}}</a></h4>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
 
   </body>
 </html>
